@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://c4otn70we5tfj"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ik5og"]
+friction = 100000.0
+rough = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ik5og"]
+albedo_color = Color(0.00392157, 0.32549, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ik5og"]
+material = SubResource("StandardMaterial3D_ik5og")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nvnu3"]
+size = Vector3(100, 1, 100)
+
+[node name="Floor" type="StaticBody3D"]
+physics_material_override = SubResource("PhysicsMaterial_ik5og")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, -0.0441628, 0, 0.254318)
+mesh = SubResource("BoxMesh_ik5og")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_nvnu3")

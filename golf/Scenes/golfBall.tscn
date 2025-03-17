@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://cl8fw10m7che4"]
+
+[ext_resource type="Script" uid="uid://dpta62ehdhumj" path="res://Scenes/golf_ball.gd" id="1_gnroj"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gnroj"]
+friction = 0.5
+rough = true
+bounce = 0.53
+
+[sub_resource type="SphereMesh" id="SphereMesh_knx25"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_gnroj"]
+radius = 2.5
+
+[node name="golfBall" type="RigidBody3D"]
+physics_material_override = SubResource("PhysicsMaterial_gnroj")
+gravity_scale = 4.0
+script = ExtResource("1_gnroj")
+force_strength = 50.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+mesh = SubResource("SphereMesh_knx25")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_gnroj")
+debug_color = Color(2.5028e-06, 0.639162, 0.846923, 0.42)
