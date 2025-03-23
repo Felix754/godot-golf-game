@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://p3ewghf6wl3a"]
+
+[ext_resource type="PackedScene" uid="uid://c4otn70we5tfj" path="res://Assets/Scenes/floor.tscn" id="1_jjgbg"]
+[ext_resource type="PackedScene" uid="uid://cl8fw10m7che4" path="res://Assets/Scenes/golfBall.tscn" id="2_bo1nx"]
+[ext_resource type="Script" uid="uid://fanxnkx1m08i" path="res://Assets/Skripts/camera_3d.gd" id="3_8gbba"]
+[ext_resource type="PackedScene" uid="uid://km0jk5ouro1p" path="res://Assets/Scenes/hole.tscn" id="4_jjvhh"]
+[ext_resource type="Script" uid="uid://bdjq881ii2v15" path="res://Assets/Skripts/game_manager.gd" id="5_rvsrt"]
+
+[node name="main" type="Node"]
+
+[node name="Floor" parent="." instance=ExtResource("1_jjgbg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.476746, 0, 0.148979)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.23005, 0.973179, 0, -0.973179, 0.23005, 0, 94.1379, 76.0383)
+
+[node name="golfBall" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("2_bo1nx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0113602, 33.7853, -0.0798435)
+camera = NodePath("../Camera3D")
+
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target")]
+transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, -0.0986013, 19.7046, 16.2529)
+script = ExtResource("3_8gbba")
+target = NodePath("../golfBall")
+
+[node name="Hole" parent="." instance=ExtResource("4_jjvhh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100.393, 6.48717, 84.4703)
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("5_rvsrt")

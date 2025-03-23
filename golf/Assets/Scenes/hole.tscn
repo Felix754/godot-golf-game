@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://km0jk5ouro1p"]
+
+[ext_resource type="Script" uid="uid://ddanfxtck7uhs" path="res://Assets/Skripts/hole.gd" id="1_840a2"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_4igv2"]
+height = 2.00154
+radius = 5.01367
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_4igv2"]
+
+[node name="Hole" type="Node3D"]
+script = ExtResource("1_840a2")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00776601, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00705719, 0)
+shape = SubResource("CylinderShape3D_4igv2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 0)
+mesh = SubResource("CylinderMesh_4igv2")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://ba4ggweqvr3pi"
-path="res://.godot/imported/golftestcourt2.glb-1b2907ead2b513dc2cb3ffc18a1f1eb1.scn"
+valid=false
 
 [deps]
 
-source_file="res://Scenes/golftestcourt2.glb"
-dest_files=["res://.godot/imported/golftestcourt2.glb-1b2907ead2b513dc2cb3ffc18a1f1eb1.scn"]
+source_file="res://Assets/Scenes/golftestcourt2.glb"
 
 [params]
 

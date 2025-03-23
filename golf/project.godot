@@ -13,7 +13,7 @@ config_version=5
 config/name="Golf"
 run/main_scene="uid://p3ewghf6wl3a"
 config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://Assets/icon.svg"
 
 [display]
 

@@ -1,11 +1,10 @@
 [gd_scene load_steps=5 format=3 uid="uid://cl8fw10m7che4"]
 
-[ext_resource type="Script" uid="uid://dpta62ehdhumj" path="res://Scenes/golf_ball.gd" id="1_gnroj"]
+[ext_resource type="Script" uid="uid://dpta62ehdhumj" path="res://Assets/Skripts/golf_ball.gd" id="1_gnroj"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gnroj"]
-friction = 0.5
-rough = true
-bounce = 0.53
+friction = 0.0
+bounce = 0.5
 
 [sub_resource type="SphereMesh" id="SphereMesh_knx25"]
 
@@ -16,7 +15,6 @@ radius = 2.5
 physics_material_override = SubResource("PhysicsMaterial_gnroj")
 gravity_scale = 4.0
 script = ExtResource("1_gnroj")
-force_strength = 50.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
