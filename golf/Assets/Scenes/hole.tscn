@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://km0jk5ouro1p"]
 
-[ext_resource type="Script" uid="uid://ddanfxtck7uhs" path="res://Assets/Skripts/hole.gd" id="1_840a2"]
+[ext_resource type="Script" uid="uid://ddanfxtck7uhs" path="res://Assets/Scripts/hole.gd" id="1_840a2"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_4igv2"]
 height = 2.00154

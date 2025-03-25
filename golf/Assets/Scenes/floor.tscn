@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://c4otn70we5tfj"]
 
-[ext_resource type="ArrayMesh" uid="uid://c1mcpb6drry6m" path="res://Assets/Scenes/meshes/golftestcourt2_Mesh_002.res" id="1_nvnu3"]
+[ext_resource type="ArrayMesh" uid="uid://c1mcpb6drry6m" path="res://Assets/Models/golftestcourt_Mesh.res" id="1_nvnu3"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ik5og"]
 friction = 0.3
