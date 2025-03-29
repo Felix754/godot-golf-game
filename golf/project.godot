@@ -30,4 +30,5 @@ left_mouse={
 
 [physics]
 
+common/physics_ticks_per_second=120
 3d/physics_engine="GodotPhysics3D"

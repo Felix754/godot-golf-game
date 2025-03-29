@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://p3ewghf6wl3a"]
+[gd_scene load_steps=12 format=3 uid="uid://p3ewghf6wl3a"]
 
 [ext_resource type="PackedScene" uid="uid://c4otn70we5tfj" path="res://Assets/Scenes/floor.tscn" id="1_jjgbg"]
 [ext_resource type="PackedScene" uid="uid://cl8fw10m7che4" path="res://Assets/Scenes/golfBall.tscn" id="2_bo1nx"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://km0jk5ouro1p" path="res://Assets/Scenes/hole.tscn" id="4_jjvhh"]
 [ext_resource type="Script" uid="uid://bdjq881ii2v15" path="res://Assets/Scripts/game_manager.gd" id="5_rvsrt"]
 [ext_resource type="Texture2D" uid="uid://xd3dcgaryd32" path="res://Assets/Textures/skybox.exr" id="6_nacht"]
+[ext_resource type="PackedScene" uid="uid://bb2nmsg4wym8s" path="res://Assets/Scenes/check_star.tscn" id="7_acsc0"]
+[ext_resource type="Script" uid="uid://d6cytvaixtqx" path="res://Assets/Scripts/fps_counter.gd" id="7_f8o6k"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_acsc0"]
 panorama = ExtResource("6_nacht")
@@ -27,7 +29,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.476746, 0, 0.148979)
 transform = Transform3D(1, 0, 0, 0, 0.23005, 0.973179, 0, -0.973179, 0.23005, 0, 94.1379, 76.0383)
 
 [node name="golfBall" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("2_bo1nx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0113602, 33.7853, -0.0798435)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0113602, 69.1776, -0.0798435)
 camera = NodePath("../Camera3D")
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target")]
@@ -47,13 +49,14 @@ environment = SubResource("Environment_4357x")
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1600.0
+offset_bottom = 900.0
 
 [node name="GridContainer" type="GridContainer" parent="UI"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1600.0
+offset_bottom = 900.0
+columns = 2
 
 [node name="Button_test" type="Button" parent="UI/GridContainer"]
 layout_mode = 2
@@ -62,6 +65,19 @@ text = "test level"
 [node name="Button_grass" type="Button" parent="UI/GridContainer"]
 layout_mode = 2
 text = "grass level"
+
+[node name="FPS_counter" type="Label" parent="UI/GridContainer"]
+layout_mode = 2
+script = ExtResource("7_f8o6k")
+
+[node name="Check_star" parent="." instance=ExtResource("7_acsc0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -94.684, 16.6262, 35.1561)
+
+[node name="Check_star2" parent="." instance=ExtResource("7_acsc0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.2039, 72.1838)
+
+[node name="Check_star3" parent="." instance=ExtResource("7_acsc0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46.261, 15.4118, 33.9819)
 
 [connection signal="pressed" from="UI/GridContainer/Button_test" to="GameManager" method="_on_buttonChangetoTest_pressed"]
 [connection signal="pressed" from="UI/GridContainer/Button_grass" to="GameManager" method="_on_buttonChangetoGrass_pressed"]

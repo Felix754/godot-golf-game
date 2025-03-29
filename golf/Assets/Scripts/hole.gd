@@ -6,4 +6,5 @@ signal level_won
 
 
 func _on_area_3d_body_entered(body):
-	level_won.emit()
+	if body is GolfBall:
+		level_won.emit()
