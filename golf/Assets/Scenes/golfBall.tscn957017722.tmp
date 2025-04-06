@@ -12,9 +12,7 @@ radius = 2.5
 
 [node name="golfBall" type="RigidBody3D"]
 physics_material_override = SubResource("PhysicsMaterial_gnroj")
-gravity_scale = 5.0
-contact_monitor = true
-max_contacts_reported = 4
+gravity_scale = 4.0
 script = ExtResource("1_gnroj")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
