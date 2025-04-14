@@ -20,6 +20,7 @@ var charge_amount: float = min_force		# Accumulated charge force
 var friction_factor: float = 1.0		# Current friction from surface
 var bounciness: float = 0.5			# Current bounce factor
 #-------------------------------------------------------------------
+var game_manager: Node = null
 
 # ----------------------- Surface material mappings -----------------------
 var friction_table = {
@@ -30,7 +31,7 @@ var friction_table = {
 }
 
 var bounce_table = {
-	0.1: 0.3,	# Ice – reduced bounce for smoother gameplay
+	0.1: 0.8,	# Ice – reduced bounce for smoother gameplay
 	0.3: 0.3,	# Grass – soft bounce
 	0.5: 0.3,	# Concrete – consistent bounce
 	1.0: 0.05,	# Sand – almost no bounce
@@ -44,6 +45,7 @@ var previous_friction_factor: float = -1.0	# Previously applied friction (for pr
 
 # Called when the node is added to the scene
 func _ready():
+	game_manager = $"../GameManager"	
 	# Timer to check surface properties periodically
 	var timer = Timer.new()
 	timer.wait_time = 0.1
@@ -94,7 +96,10 @@ func push_towards_camera():
 
 # Called every physics frame
 func _physics_process(delta):
-
+	if global_transform.origin.y < -10.0:  # або Area3D падіння
+		game_manager.reset_to_checkpoint(self)
+		print("Out of bounds! Resetting to:", game_manager.current_checkpoint_position)
+		
 	# Adjust angular dampening based on speed when grounded
 	if !is_airborne:
 		var speed = linear_velocity.length()

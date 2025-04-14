@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://p3ewghf6wl3a"]
+[gd_scene load_steps=13 format=3 uid="uid://p3ewghf6wl3a"]
 
 [ext_resource type="PackedScene" uid="uid://c4otn70we5tfj" path="res://Assets/Scenes/floor.tscn" id="1_jjgbg"]
 [ext_resource type="PackedScene" uid="uid://cl8fw10m7che4" path="res://Assets/Scenes/golfBall.tscn" id="2_bo1nx"]
@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://bb2nmsg4wym8s" path="res://Assets/Scenes/check_star.tscn" id="7_acsc0"]
 [ext_resource type="Script" uid="uid://d6cytvaixtqx" path="res://Assets/Scripts/fps_counter.gd" id="7_f8o6k"]
 [ext_resource type="PackedScene" uid="uid://b8gphinpte7ds" path="res://Assets/Scenes/floor_2.tscn" id="9_4357x"]
-[ext_resource type="PackedScene" uid="uid://jbouuxbho8tc" path="res://Assets/Scenes/checkpoint.tscn" id="10_f1jyc"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_acsc0"]
 panorama = ExtResource("6_nacht")
@@ -25,13 +24,13 @@ sky = SubResource("Sky_f8o6k")
 [node name="main" type="Node"]
 
 [node name="Floor" parent="." instance=ExtResource("1_jjgbg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.776707, 0.101753, 0.382927)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.476746, 0, 0.148979)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.23005, 0.973179, 0, -0.973179, 0.23005, 0, 94.1379, 76.0383)
 
 [node name="golfBall" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("2_bo1nx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0113602, 61.8326, -0.0798435)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0113602, 69.1776, -0.0798435)
 camera = NodePath("../Camera3D")
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target")]
@@ -83,16 +82,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46.261, 15.4118, 33.9819)
 
 [node name="Floor2" parent="." instance=ExtResource("9_4357x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 161.138, 4.62611, 43.7181)
-
-[node name="StartingPoint" parent="." instance=ExtResource("10_f1jyc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.258057, 77.9168, -0.654877)
-is_start = true
-
-[node name="Checkpoint" parent="." instance=ExtResource("10_f1jyc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 113.588, 13.8915, 36.3909)
-
-[node name="Checkpoint2" parent="." instance=ExtResource("10_f1jyc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -106.279, 14.7579, 0)
 
 [connection signal="pressed" from="UI/GridContainer/Button_test" to="GameManager" method="_on_buttonChangetoTest_pressed"]
 [connection signal="pressed" from="UI/GridContainer/Button_grass" to="GameManager" method="_on_buttonChangetoGrass_pressed"]

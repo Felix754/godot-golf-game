@@ -5,7 +5,7 @@ extends Camera3D
 @export var rotation_speed: float = 0.005  # Mouse rotation sensitivity
 @export var zoom_speed: float = 0.5  # Zoom in/out speed
 @export var min_distance: float = 4.0  # Minimum distance from the target
-@export var max_distance: float = 15.0  # Maximum distance from the target
+@export var max_distance: float = 20.0  # Maximum distance from the target
 
 var yaw: float = 0.0  # Rotation angle around the Y axis
 var rotating: bool = false  # Whether the camera is currently rotating
