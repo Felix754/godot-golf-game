@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://p3ewghf6wl3a"]
+[gd_scene load_steps=15 format=3 uid="uid://p3ewghf6wl3a"]
 
 [ext_resource type="PackedScene" uid="uid://c4otn70we5tfj" path="res://Assets/Scenes/floor.tscn" id="1_jjgbg"]
 [ext_resource type="PackedScene" uid="uid://cl8fw10m7che4" path="res://Assets/Scenes/golfBall.tscn" id="2_bo1nx"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://d6cytvaixtqx" path="res://Assets/Scripts/fps_counter.gd" id="7_f8o6k"]
 [ext_resource type="PackedScene" uid="uid://b8gphinpte7ds" path="res://Assets/Scenes/floor_2.tscn" id="9_4357x"]
 [ext_resource type="PackedScene" uid="uid://jbouuxbho8tc" path="res://Assets/Scenes/checkpoint.tscn" id="10_f1jyc"]
+[ext_resource type="PackedScene" uid="uid://daj8jgmnpoisu" path="res://Assets/Scenes/wind.tscn" id="11_vlji8"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_acsc0"]
 panorama = ExtResource("6_nacht")
@@ -93,6 +94,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 113.588, 13.8915, 36.3909)
 
 [node name="Checkpoint2" parent="." instance=ExtResource("10_f1jyc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -106.279, 14.7579, 0)
+
+[node name="Area3D" parent="." instance=ExtResource("11_vlji8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64.4307, 19.573, 41.7978)
+wind_strength = 100.0
 
 [connection signal="pressed" from="UI/GridContainer/Button_test" to="GameManager" method="_on_buttonChangetoTest_pressed"]
 [connection signal="pressed" from="UI/GridContainer/Button_grass" to="GameManager" method="_on_buttonChangetoGrass_pressed"]
