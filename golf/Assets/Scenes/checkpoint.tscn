@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://jbouuxbho8tc"]
+[gd_scene load_steps=3 format=3 uid="uid://vjxb7k3s2ywg"]
 
-[ext_resource type="Script" uid="uid://crum63scq5f68" path="res://Assets/Scripts/checkpoint.gd" id="1_3bkjb"]
+[ext_resource type="Script" uid="uid://v6nutow1lh2a" path="res://Assets/Scripts/checkpoint.gd" id="1_3bkjb"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w57ur"]
 

@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://ctwinpx5ugoq8"]
+
+[ext_resource type="Script" uid="uid://b8m31r5qrk818" path="res://addons/zylann.hterrain/hterrain.gd" id="1_tk0hl"]
+[ext_resource type="Resource" uid="uid://brki88e82gh4x" path="res://terrain/data.hterrain" id="2_hegof"]
+[ext_resource type="Script" uid="uid://ct2y37cndrwp8" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="3_uwiyt"]
+[ext_resource type="Texture2D" uid="uid://okhoqca0gau1" path="res://Assets/Textures/grass 17 - 128x128.png" id="4_hegof"]
+
+[sub_resource type="Resource" id="Resource_osc4u"]
+script = ExtResource("3_uwiyt")
+mode = 0
+textures = [[ExtResource("4_hegof")], [null]]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="HTerrain" type="Node3D" parent="."]
+script = ExtResource("1_tk0hl")
+_terrain_data = ExtResource("2_hegof")
+chunk_size = 32
+collision_enabled = true
+collision_layer = 1
+collision_mask = 1
+shader_type = "Classic4Lite"
+custom_shader = null
+custom_globalmap_shader = null
+texture_set = SubResource("Resource_osc4u")
+render_layers = 1
+cast_shadow = 1
+shader_params/u_ground_uv_scale = 20
+shader_params/u_depth_blending = true
+shader_params/u_triplanar = null
+shader_params/u_tile_reduction = null
+metadata/_custom_type_script = "uid://b8m31r5qrk818"

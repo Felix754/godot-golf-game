@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=4 uid="uid://6latgw8kcus8"]
+
+[ext_resource type="PackedScene" uid="uid://cqy88jarfpgvj" path="res://Assets/Models/arrow.glb" id="1_81sdj"]
+[ext_resource type="Material" uid="uid://drohsm7ag31mq" path="res://Assets/Materials/arrow.tres" id="2_urhp6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xmimf"]
+resource_name = "Material.001"
+cull_mode = 2
+albedo_color = Color(0.906383, 0.0430443, 0, 1)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_8syug"]
+_surfaces = [{
+"aabb": AABB(-1, 0, -0.411426, 2.66318, 0.119437, 0.822852),
+"format": 34359742465,
+"index_count": 120,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAADAAAAAwAFAAEAAgABAAUABAAGAAMAAwAGAAUAAAAEAAcABwAGAAQABwAFAAYAAAAHAAIAAgAFAAcABwAHAAIABwACAAIACAAHAAcACAAIAAcABwAJAAIABwAIAAkAAgACAAkACgACAAcACgAHAAgAAgAJAAkAAgAKAAkACgAKAAoACQAJAAoACgAIAAgACgAKAAgACAALAAkACQAKAAoACAAMAAsACgAMAAgACQALAA0ADAANAAsACQAKAAoADAANAA0ACQANAAoACgANAAwACgANAA0ACgANAAoACgAKAAoA"),
+"name": "Material.001",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 14,
+"vertex_data": PackedByteArray("AACAvwAAAADMzEw+AACAP3yb9D3MzEw+AACAPwAAAADMzEw+AACAv3yb9D3MzEw+AACAvwAAAADMzEy+AACAP3yb9D3MzEy+AACAv3yb9D3MzEy+AACAPwAAAADMzEy+AACAPwAAAABuptK+AACAPwAAAABuptI+HOPUPwAAAAAAAACAAACAP3yb9D1uptI+AACAP3yb9D1uptK+HOPUP3yb9D0AAACA")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_81sdj"]
+resource_name = "arrow_Plane_001"
+_surfaces = [{
+"aabb": AABB(-1, 0, -0.411426, 2.66318, 0.119437, 0.822852),
+"attribute_data": PackedByteArray("AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AACAPwAAAAAAAIA/AACAPwAAgD8AAIA/AACAPwAAAAAAAIA/AAAAAAAAgD8AAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAgD8AAAAAAACAPwAAgD8AAAAAAAAAAAAAgD8AAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAAAAAAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAIA/AAAAAAAAgD8AAIA/AACAPwAAgD8AAIA/AAAAAAAAgD8AAIA/AACAPwAAAAAAAIA/AAAAAAAAgD8AAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8="),
+"format": 34359742487,
+"index_count": 120,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAHAAQACAAJAAcACgAJAAgACgALAAkACwAMAAkACwANAAwADgALAAoADgAPAAsAEAAPAA4AEAARAA8AEgATABQAEgAVABMAFgASABQAFgAUABcAGAAZABoAGAAbABkAHAAdAB4AHAAfAB0AIAAhACIAIAAjACEAJAAlACYAJAAnACUAKAApACoAKAArACkALAAtAC4ALAAvAC0AMAAxADIAMAAzADEANAA1ADYANAA3ADUAOAA5ADoAOwA5ADgAOQA7ADwAOQA8AD0APgA8ADsAPgA/ADwA"),
+"material": SubResource("StandardMaterial3D_xmimf"),
+"name": "Material.001",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 64,
+"vertex_data": PackedByteArray("AACAvwAAAADMzEw+AACAP3yb9D3MzEw+AACAPwAAAADMzEw+AACAv3yb9D3MzEw+AACAPwAAAABuptK+AACAPwAAAADMzEy+AACAPwAAAADMzEy+AACAPwAAAABuptK+HOPUPwAAAAAAAACAHOPUPwAAAAAAAACAHOPUPwAAAAAAAACAHOPUPwAAAAAAAACAHOPUP3yb9D0AAACAHOPUP3yb9D0AAACAAACAPwAAAABuptI+AACAPwAAAABuptI+AACAPwAAAADMzEw+AACAPwAAAADMzEw+AACAPwAAAADMzEy+AACAPwAAAABuptI+AACAPwAAAADMzEw+AACAPwAAAABuptK+AACAPwAAAADMzEy+AACAPwAAAADMzEw+AACAPwAAAADMzEy+AACAv3yb9D3MzEy+AACAvwAAAADMzEy+AACAP3yb9D3MzEy+AACAv3yb9D3MzEw+AACAP3yb9D3MzEy+AACAP3yb9D3MzEw+AACAv3yb9D3MzEy+AACAP3yb9D1uptK+HOPUP3yb9D0AAACAAACAP3yb9D1uptI+HOPUP3yb9D0AAACAAACAPwAAAABuptI+HOPUP3yb9D0AAACAHOPUPwAAAAAAAACAAACAP3yb9D1uptI+AACAPwAAAABuptK+AACAP3yb9D1uptI+AACAPwAAAABuptI+AACAP3yb9D1uptK+AACAPwAAAADMzEw+AACAP3yb9D3MzEy+AACAPwAAAADMzEy+AACAP3yb9D3MzEw+HOPUPwAAAAAAAACAAACAP3yb9D1uptK+AACAPwAAAABuptK+HOPUP3yb9D0AAACAAACAvwAAAADMzEy+AACAv3yb9D3MzEw+AACAvwAAAADMzEw+AACAv3yb9D3MzEy+AACAPwAAAABuptI+HOPUPwAAAAAAAACAHOPUPwAAAAAAAACAAACAPwAAAADMzEw+AACAPwAAAADMzEy+AACAPwAAAABuptK+AACAvwAAAADMzEw+AACAvwAAAADMzEy+/3//f////z//f/9/////P/9//3////8//3//f////z//f///////v/9///////+//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//////////7//////////v/////////+//////////7//f///////v/9///////+//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+/ALH/f////z8Asf9/////PwCx/3////8/ALH/f////z8AAP9/////vwAA/3////+/AAD/f////78AAP9/////v////3////+/////f////7////9/////v////3////+////9zv///7////3O////v////c7///+////9zv///78AAP9/////vwAA/3////+/AAD/f////78AAP9/////v/9///////+//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//3///////78=")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_8syug")
+
+[node name="arrow" instance=ExtResource("1_81sdj")]
+
+[node name="Plane" parent="." index="0"]
+mesh = SubResource("ArrayMesh_81sdj")
+surface_material_override/0 = ExtResource("2_urhp6")

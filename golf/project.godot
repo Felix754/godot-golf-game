@@ -15,10 +15,18 @@ run/main_scene="uid://p3ewghf6wl3a"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://Assets/icon.svg"
 
+[autoload]
+
+Autoload="*res://Assets/Scripts/Autoload.gd"
+
 [display]
 
 window/size/viewport_width=1600
 window/size/viewport_height=900
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/zylann.hterrain/plugin.cfg")
 
 [input]
 

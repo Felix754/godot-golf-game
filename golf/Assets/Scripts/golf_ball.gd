@@ -8,6 +8,7 @@ class_name GolfBall
 @export var camera: Camera3D				# Camera used to determine hit direction
 @export var cooldown_time: float = 2.0		# Cooldown time between hits
 @export var stop_threshold: float = 0.03	# Ball full stop
+@onready var arrow=$"/root/main/Camera3D/arrow"
 #------------------------------------------------------------------------
 
 # ----------------------- Hit control state -----------------------
@@ -15,12 +16,11 @@ var can_push: bool = true			# Can the ball currently be hit
 var charging: bool = false			# Is the ball currently charging a hit
 var charge_amount: float = min_force		# Accumulated charge force
 # -----------------------------------------------------------------
-
+var game_manager: Node = null
 # ----------------------- Surface properties -----------------------
 var friction_factor: float = 1.0		# Current friction from surface
 var bounciness: float = 0.5			# Current bounce factor
 #-------------------------------------------------------------------
-var game_manager: Node = null
 
 # ----------------------- Surface material mappings -----------------------
 var friction_table = {
@@ -31,7 +31,7 @@ var friction_table = {
 }
 
 var bounce_table = {
-	0.1: 0.8,	# Ice – reduced bounce for smoother gameplay
+	0.1: 0.3,	# Ice – reduced bounce for smoother gameplay
 	0.3: 0.3,	# Grass – soft bounce
 	0.5: 0.3,	# Concrete – consistent bounce
 	1.0: 0.05,	# Sand – almost no bounce
@@ -52,6 +52,7 @@ func _ready():
 	timer.autostart = true
 	timer.timeout.connect(check_surface)
 	add_child(timer)
+	arrow.visible=false
 
 # Input handling: spacebar to charge and hit
 func _input(event):
@@ -60,18 +61,27 @@ func _input(event):
 			charging = true
 			charge_amount = min_force
 			print("Charging started")
+			arrow.visible = true
 		elif not event.pressed and charging:
+			arrow.visible=false
 			charging = false
 			push_towards_camera()
 			can_push = false
 			await get_tree().create_timer(cooldown_time).timeout
 			can_push = true
+			
 
 # Called every frame: update charge if charging
 func _process(delta):
 	if charging:
 		var rate = (max_force - min_force) / charge_time
 		charge_amount = min(charge_amount + rate * delta, max_force)
+		
+		var arrow_material = arrow.get_node("Plane").get_active_material(0)
+		var t = (charge_amount - min_force) / (max_force - min_force)
+		var arrow_color = Color(t, 1.0 - t, 0.0)
+		if arrow_material:
+			arrow_material.albedo_color = arrow_color
 
 # Apply impulse to ball and torque to simulate rolling direction
 func push_towards_camera():
@@ -99,7 +109,7 @@ func _physics_process(delta):
 	if global_transform.origin.y < -10.0:  # або Area3D падіння
 		game_manager.reset_to_checkpoint(self)
 		print("Out of bounds! Resetting to:", game_manager.current_checkpoint_position)
-		
+
 	# Adjust angular dampening based on speed when grounded
 	if !is_airborne:
 		var speed = linear_velocity.length()

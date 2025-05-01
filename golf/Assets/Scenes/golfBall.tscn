@@ -1,29 +1,39 @@
-[gd_scene load_steps=5 format=3 uid="uid://cl8fw10m7che4"]
+[gd_scene load_steps=8 format=3 uid="uid://cl8fw10m7che4"]
 
 [ext_resource type="Script" uid="uid://dpta62ehdhumj" path="res://Assets/Scripts/golf_ball.gd" id="1_gnroj"]
 [ext_resource type="ArrayMesh" uid="uid://cx648m8p1fesq" path="res://Assets/Models/golfball_Mesh.res" id="2_uvie0"]
+[ext_resource type="Shader" uid="uid://dsjqdjwcia0k2" path="res://Assets/Materials/golfBall.gdshader" id="3_kquk4"]
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gnroj"]
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kquk4"]
 friction = 0.0
 bounce = 0.5
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_kquk4"]
+specular_color = Color(0.325757, 0.362147, 0.382508, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1ra1d"]
+render_priority = 0
+shader = ExtResource("3_kquk4")
+shader_parameter/albedo = SubResource("CanvasTexture_kquk4")
+shader_parameter/jitter = 0.504
+shader_parameter/jitter_z_coordinate = true
+shader_parameter/jitter_depth_independent = true
+shader_parameter/affine_texture_mapping = true
+shader_parameter/alpha_scissor = 1.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_gnroj"]
 radius = 2.5
 
 [node name="golfBall" type="RigidBody3D"]
-physics_material_override = SubResource("PhysicsMaterial_gnroj")
-gravity_scale = 5.0
-contact_monitor = true
-max_contacts_reported = 4
+physics_material_override = SubResource("PhysicsMaterial_kquk4")
+gravity_scale = 4.0
 script = ExtResource("1_gnroj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0)
+mesh = ExtResource("2_uvie0")
+surface_material_override/0 = SubResource("ShaderMaterial_1ra1d")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_gnroj")
 debug_color = Color(2.5028e-06, 0.639162, 0.846923, 0.42)
-
-[node name="BallAnimate" type="Node3D" parent="."]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="BallAnimate"]
-transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0)
-mesh = ExtResource("2_uvie0")
-skeleton = NodePath("../..")

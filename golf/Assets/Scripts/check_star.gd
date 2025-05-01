@@ -12,3 +12,6 @@ func _on_area_3d_body_entered(body):
 		print("Star collected!")  # Debug message
 		star_collected.emit()
 		queue_free() # Delete star
+		
+func play_animation():
+	$AnimationPlayer.play("star_anim")

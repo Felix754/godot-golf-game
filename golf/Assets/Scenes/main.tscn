@@ -1,47 +1,66 @@
-[gd_scene load_steps=15 format=3 uid="uid://p3ewghf6wl3a"]
+[gd_scene load_steps=20 format=3 uid="uid://p3ewghf6wl3a"]
 
 [ext_resource type="PackedScene" uid="uid://c4otn70we5tfj" path="res://Assets/Scenes/floor.tscn" id="1_jjgbg"]
+[ext_resource type="Script" uid="uid://cgeq62oqktr8u" path="res://Assets/Scripts/Autoload.gd" id="1_ttgh6"]
 [ext_resource type="PackedScene" uid="uid://cl8fw10m7che4" path="res://Assets/Scenes/golfBall.tscn" id="2_bo1nx"]
 [ext_resource type="Script" uid="uid://fanxnkx1m08i" path="res://Assets/Scripts/camera_3d.gd" id="3_8gbba"]
 [ext_resource type="PackedScene" uid="uid://km0jk5ouro1p" path="res://Assets/Scenes/hole.tscn" id="4_jjvhh"]
+[ext_resource type="PackedScene" uid="uid://6latgw8kcus8" path="res://Assets/Scenes/arrow.tscn" id="4_vlji8"]
 [ext_resource type="Script" uid="uid://bdjq881ii2v15" path="res://Assets/Scripts/game_manager.gd" id="5_rvsrt"]
+[ext_resource type="Shader" uid="uid://n3h5m1psp3n6" path="res://Assets/Materials/skyshader.gdshader" id="6_4357x"]
 [ext_resource type="Texture2D" uid="uid://xd3dcgaryd32" path="res://Assets/Textures/skybox.exr" id="6_nacht"]
+[ext_resource type="PackedScene" uid="uid://b75lo2ibcr0nd" path="res://Assets/Scenes/test_2.tscn" id="6_tm25p"]
 [ext_resource type="PackedScene" uid="uid://bb2nmsg4wym8s" path="res://Assets/Scenes/check_star.tscn" id="7_acsc0"]
 [ext_resource type="Script" uid="uid://d6cytvaixtqx" path="res://Assets/Scripts/fps_counter.gd" id="7_f8o6k"]
-[ext_resource type="PackedScene" uid="uid://b8gphinpte7ds" path="res://Assets/Scenes/floor_2.tscn" id="9_4357x"]
-[ext_resource type="PackedScene" uid="uid://jbouuxbho8tc" path="res://Assets/Scenes/checkpoint.tscn" id="10_f1jyc"]
-[ext_resource type="PackedScene" uid="uid://daj8jgmnpoisu" path="res://Assets/Scenes/wind.tscn" id="11_vlji8"]
+[ext_resource type="PackedScene" uid="uid://c233a17aoclpr" path="res://Assets/Scenes/grass_asphalt.tscn" id="10_f1jyc"]
+[ext_resource type="PackedScene" uid="uid://ctwinpx5ugoq8" path="res://Assets/Scenes/terrain.tscn" id="14_uop3n"]
+[ext_resource type="PackedScene" uid="uid://cfwflshsc1for" path="res://Assets/Scenes/level_1_2.tscn" id="14_uq7jr"]
+[ext_resource type="PackedScene" uid="uid://deip46jith4kj" path="res://Assets/Models/checkpoint.glb" id="15_uq7jr"]
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_acsc0"]
-panorama = ExtResource("6_nacht")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f1jyc"]
+shader = ExtResource("6_4357x")
+shader_parameter/skyColor = Color(0.120789, 0.519866, 0.602319, 1)
+shader_parameter/horizonColor = Color(0, 0, 0, 1)
+shader_parameter/skyTexture = ExtResource("6_nacht")
 
 [sub_resource type="Sky" id="Sky_f8o6k"]
-sky_material = SubResource("PanoramaSkyMaterial_acsc0")
-radiance_size = 0
+sky_material = SubResource("ShaderMaterial_f1jyc")
 
 [sub_resource type="Environment" id="Environment_4357x"]
 background_mode = 2
 sky = SubResource("Sky_f8o6k")
+ambient_light_source = 3
+ambient_light_sky_contribution = 0.4
 
 [node name="main" type="Node"]
-
-[node name="Floor" parent="." instance=ExtResource("1_jjgbg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.776707, 0.101753, 0.382927)
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.23005, 0.973179, 0, -0.973179, 0.23005, 0, 94.1379, 76.0383)
+script = ExtResource("1_ttgh6")
 
 [node name="golfBall" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("2_bo1nx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0113602, 61.8326, -0.0798435)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 92, 0)
 camera = NodePath("../Camera3D")
+
+[node name="Floor" parent="." groups=["levels"] instance=ExtResource("1_jjgbg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.477, -2.92327, 0.149)
+
+[node name="level1" parent="." groups=["levels"] instance=ExtResource("14_uq7jr")]
+transform = Transform3D(43.1845, 0, 0, 0, 43.1845, 0, 0, 0, 43.1845, 1061.9, 52.8771, 926.172)
+
+[node name="grass_asphalt" parent="." groups=["levels"] instance=ExtResource("10_f1jyc")]
+transform = Transform3D(4.52157, 0, 0, 0, 4.52157, 0, 0, 0, 4.52157, 13.2684, -133.083, -2.99996)
+
+[node name="test2" parent="." groups=["levels"] instance=ExtResource("6_tm25p")]
+transform = Transform3D(4.52157, 0, 0, 0, 4.52157, 0, 0, 0, 4.52157, 13.2684, -133.083, -2.99996)
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target")]
 transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, -0.0986013, 19.7046, 16.2529)
 script = ExtResource("3_8gbba")
 target = NodePath("../golfBall")
 
+[node name="arrow" parent="Camera3D" instance=ExtResource("4_vlji8")]
+transform = Transform3D(-3.78552e-08, 2.18557e-08, 1, 0.5, 0.866025, 1.53837e-15, -0.866025, 0.5, -4.37114e-08, 1.49012e-08, -1.41523, -2.62419)
+
 [node name="Hole" parent="." instance=ExtResource("4_jjvhh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100.393, 6.48717, 84.4703)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1061.33, 53.5155, -387.555)
 
 [node name="GameManager" type="Node" parent="."]
 script = ExtResource("5_rvsrt")
@@ -69,35 +88,41 @@ text = "test level"
 layout_mode = 2
 text = "grass level"
 
+[node name="Button_lvl1" type="Button" parent="UI/GridContainer"]
+layout_mode = 2
+text = "Level 1"
+
+[node name="Button_test2" type="Button" parent="UI/GridContainer"]
+layout_mode = 2
+text = "test level 2
+"
+
 [node name="FPS_counter" type="Label" parent="UI/GridContainer"]
 layout_mode = 2
 script = ExtResource("7_f8o6k")
 
-[node name="Check_star" parent="." instance=ExtResource("7_acsc0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -94.684, 16.6262, 35.1561)
+[node name="Check_star" parent="." groups=["Stars"] instance=ExtResource("7_acsc0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -97.3903, 18.2006, 35.1556)
 
-[node name="Check_star2" parent="." instance=ExtResource("7_acsc0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.2039, 72.1838)
+[node name="Check_star2" parent="." groups=["Stars"] instance=ExtResource("7_acsc0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.453247, 17.9326, 72.1838)
 
-[node name="Check_star3" parent="." instance=ExtResource("7_acsc0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46.261, 15.4118, 33.9819)
+[node name="Check_star3" parent="." groups=["Stars"] instance=ExtResource("7_acsc0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47.8937, 17.1405, 33.9819)
 
-[node name="Floor2" parent="." instance=ExtResource("9_4357x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 161.138, 4.62611, 43.7181)
+[node name="Check_star4" parent="." groups=["Stars"] instance=ExtResource("7_acsc0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -84.5544, 17.0928, 0.194471)
 
-[node name="StartingPoint" parent="." instance=ExtResource("10_f1jyc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.258057, 77.9168, -0.654877)
-is_start = true
+[node name="Check_star5" parent="." groups=["Stars"] instance=ExtResource("7_acsc0")]
+transform = Transform3D(-2.79973, 0, 7.09782e-06, 0, 2.79973, 0, -7.09782e-06, 0, -2.79973, 1055.62, 109.423, 324.763)
 
-[node name="Checkpoint" parent="." instance=ExtResource("10_f1jyc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 113.588, 13.8915, 36.3909)
+[node name="Terrain" parent="." instance=ExtResource("14_uop3n")]
+transform = Transform3D(9.88856, 0, 0, 0, 9.88856, 0, 0, 0, 9.88856, -1000, 0, -1000)
 
-[node name="Checkpoint2" parent="." instance=ExtResource("10_f1jyc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -106.279, 14.7579, 0)
-
-[node name="Area3D" parent="." instance=ExtResource("11_vlji8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64.4307, 19.573, 41.7978)
-wind_strength = 100.0
+[node name="checkpoint_m" parent="." instance=ExtResource("15_uq7jr")]
+transform = Transform3D(63.0899, 0, 0, 0, 63.0899, 0, 0, 0, 63.0899, 1042.81, 50.9604, 129.537)
 
 [connection signal="pressed" from="UI/GridContainer/Button_test" to="GameManager" method="_on_buttonChangetoTest_pressed"]
 [connection signal="pressed" from="UI/GridContainer/Button_grass" to="GameManager" method="_on_buttonChangetoGrass_pressed"]
+[connection signal="pressed" from="UI/GridContainer/Button_lvl1" to="GameManager" method="_on_buttonChangetoLvl1_pressed"]
+[connection signal="pressed" from="UI/GridContainer/Button_test2" to="GameManager" method="_on_buttonChangetoTest2_pressed"]

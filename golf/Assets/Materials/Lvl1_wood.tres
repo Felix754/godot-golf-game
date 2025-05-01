@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://sp7xekrmvbe4"]
+
+[ext_resource type="Texture2D" uid="uid://p6krtwmroqyg" path="res://Assets/Textures/grass_asphalt_3d-grunge-brick-wall-texture.jpg" id="1_t62m6"]
+
+[resource]
+albedo_texture = ExtResource("1_t62m6")
+uv1_scale = Vector3(1.535, 1.535, 1.535)
+uv1_triplanar = true
