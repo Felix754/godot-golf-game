@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=4 uid="uid://cfwflshsc1for"]
+[gd_scene load_steps=42 format=4 uid="uid://cfwflshsc1for"]
 
 [ext_resource type="Material" uid="uid://sp7xekrmvbe4" path="res://Assets/Materials/Lvl1_wood.tres" id="1_f2ssb"]
 [ext_resource type="PhysicsMaterial" uid="uid://bvb6bxddcntyo" path="res://Assets/Scenes/concrete_material.tres" id="1_hxpas"]
@@ -6,6 +6,7 @@
 [ext_resource type="Material" uid="uid://01um1hbtcmba" path="res://Assets/Materials/Material.002.res" id="2_o8myj"]
 [ext_resource type="Material" uid="uid://doqix2b7oqbmp" path="res://Assets/Materials/Lvl1_grass.tres" id="3_0s1kv"]
 [ext_resource type="ArrayMesh" uid="uid://cyro5y7jx0jkl" path="res://Assets/Models/problemmesh2.res" id="4_0s1kv"]
+[ext_resource type="PackedScene" uid="uid://vjxb7k3s2ywg" path="res://Assets/Scenes/checkpoint.tscn" id="7_phcoj"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mq8a7"]
 
@@ -296,6 +297,9 @@ data = PackedVector3Array(-9.1471, -0.5306, -21.3115, -11.1796, -0.5306, -28.541
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_32hpu"]
 data = PackedVector3Array(-0.8143, 0.5639, -5.5963, 0.8143, 0.1204, -6.1877, 0.8143, 0.5639, -5.5963, -0.8143, 0.5639, -5.5963, -0.8143, 0.1204, -6.1877, 0.8143, 0.1204, -6.1877, 0, 1.0089, -5.003, -0.8143, 0.5639, -5.5963, 0.8143, 0.5639, -5.5963, -0.8143, 0.5639, -5.5963, 0, 1.0089, -5.003, -0.8143, 1.0089, -5.003, 0, 1.0089, -5.003, 0.8143, 0.5639, -5.5963, 0.8143, 1.0089, -5.003, -1, 0.0099, -6.3343, 0.8143, 0.1213, -6.1857, -0.8143, 0.1213, -6.1857, -1, 0.0099, -6.3343, 1, 0.0099, -6.3343, 0.8143, 0.1213, -6.1857, 0.825, 0.0099, -6.5092, -1, 0.0099, -6.3343, -0.8251, 0.0099, -6.5092, 0.825, 0.0099, -6.5092, 1, 0.0099, -6.3343, -1, 0.0099, -6.3343)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_phcoj"]
+size = Vector3(0.300293, 0.436523, 0.450745)
+
 [node name="level1_2" type="Node3D"]
 
 [node name="lvl_part1" type="MeshInstance3D" parent="."]
@@ -416,3 +420,11 @@ physics_material_override = ExtResource("1_hxpas")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="lvl1_slope_c"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.5, 0, 0, 0)
 shape = SubResource("ConcavePolygonShape3D_32hpu")
+
+[node name="Checkpoint2" parent="." instance=ExtResource("7_phcoj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.23897, 0.342733)
+is_start = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0290527, 0.0309753, -0.00747681)
+shape = SubResource("BoxShape3D_phcoj")

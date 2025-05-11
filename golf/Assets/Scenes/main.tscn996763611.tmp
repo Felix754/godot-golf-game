@@ -36,7 +36,14 @@ script = ExtResource("1_ttgh6")
 
 [node name="golfBall" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("2_bo1nx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 92, 0)
+max_force = 400.0
+min_force = 10.0
+charge_time = 2.0
 camera = NodePath("../Camera3D")
+cooldown_time = 2.0
+stop_threshold = 0.03
+arrow_rotation_speed = 2.5
+arrow_distance = 2.5
 
 [node name="Floor" parent="." groups=["levels"] instance=ExtResource("1_jjgbg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.477, -2.92327, 0.149)
