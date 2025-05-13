@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://p3ewghf6wl3a"]
+[gd_scene load_steps=20 format=3 uid="uid://p3ewghf6wl3a"]
 
 [ext_resource type="PackedScene" uid="uid://c4otn70we5tfj" path="res://Assets/Scenes/floor.tscn" id="1_jjgbg"]
 [ext_resource type="Script" uid="uid://cgeq62oqktr8u" path="res://Assets/Scripts/Autoload.gd" id="1_ttgh6"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://b75lo2ibcr0nd" path="res://Assets/Scenes/test_2.tscn" id="6_tm25p"]
 [ext_resource type="Script" uid="uid://d6cytvaixtqx" path="res://Assets/Scripts/fps_counter.gd" id="7_f8o6k"]
 [ext_resource type="PackedScene" uid="uid://c233a17aoclpr" path="res://Assets/Scenes/grass_asphalt.tscn" id="10_f1jyc"]
+[ext_resource type="Script" uid="uid://d2ayh3jawp3b0" path="res://Assets/Scenes/terrain.gd" id="14_ltoj3"]
 [ext_resource type="PackedScene" uid="uid://ctwinpx5ugoq8" path="res://Assets/Scenes/terrain.tscn" id="14_uop3n"]
 [ext_resource type="PackedScene" uid="uid://cfwflshsc1for" path="res://Assets/Scenes/level_1_2.tscn" id="14_uq7jr"]
 [ext_resource type="PackedScene" uid="uid://6latgw8kcus8" path="res://Assets/Scenes/arrow.tscn" id="15_ltoj3"]
@@ -99,6 +100,7 @@ script = ExtResource("7_f8o6k")
 
 [node name="Terrain" parent="." instance=ExtResource("14_uop3n")]
 transform = Transform3D(9.88856, 0, 0, 0, 9.88856, 0, 0, 0, 9.88856, -1000, 0, -1000)
+script = ExtResource("14_ltoj3")
 
 [node name="checkpoint_m" parent="." instance=ExtResource("15_uq7jr")]
 transform = Transform3D(63.0899, 0, 0, 0, 63.0899, 0, 0, 0, 63.0899, 1042.81, 46.1613, 129.537)

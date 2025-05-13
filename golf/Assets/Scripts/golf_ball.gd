@@ -6,12 +6,13 @@ class_name GolfBall
 @export var min_force: float = 10.0			# Minimum hit force
 @export var charge_time: float = 2.0		# Time to charge from min to max force
 @export var camera: Camera3D				# Reference to the camera
-@export var cooldown_time: float = 2.0		# Cooldown between hits
+@export var cooldown_time: float = 1.0		# Cooldown between hits
 @export var stop_threshold: float = 0.03	# Speed threshold to consider the ball stopped
 @onready var arrow = $"../arrow"			# Reference to the direction arrow
 @export var arrow_rotation_speed := 2.5		# Speed at which the arrow rotates
 @export var arrow_distance := 5.0			# Distance from ball to arrow
 var arrow_angle := 0.0						# Current angle of the arrow
+var charging_up := true  # true = increasing, false = decreasing
 #------------------------------------------------------------------------
 
 # ----------------------- Hit control state -----------------------------
@@ -82,9 +83,9 @@ func _input(event):
 func _process(delta):
 	# Rotate arrow based on player input
 	var angle_delta := 0.0
-	if Input.is_action_pressed("ui_left"):
-		angle_delta -= arrow_rotation_speed * delta
 	if Input.is_action_pressed("ui_right"):
+		angle_delta -= arrow_rotation_speed * delta
+	if Input.is_action_pressed("ui_left"):
 		angle_delta += arrow_rotation_speed * delta
 	if angle_delta != 0.0:
 		arrow_angle += angle_delta
@@ -110,12 +111,24 @@ func _process(delta):
 	# Charge force and change arrow color
 	if charging:
 		var rate = (max_force - min_force) / charge_time
-		charge_amount = min(charge_amount + rate * delta, max_force)
+
+		if charging_up:
+			charge_amount += rate * delta
+			if charge_amount >= max_force:
+				charge_amount = max_force
+				charging_up = false
+		else:
+			charge_amount -= rate * delta
+			if charge_amount <= min_force:
+				charge_amount = min_force
+				charging_up = true
+
 		var arrow_material = arrow.get_node("Plane").get_active_material(0)
 		var t = (charge_amount - min_force) / (max_force - min_force)
-		var arrow_color = Color(t, 1.0 - t, 0.0)  # Color from green to red
+		var arrow_color = Color(t, 1.0 - t, 0.0)  # Color from green to red and back
 		if arrow_material:
 			arrow_material.albedo_color = arrow_color
+
 
 func push_towards_arrow():
 	# Apply impulse and torque in arrow direction
@@ -132,10 +145,13 @@ func push_towards_arrow():
 	var arrow_material = arrow.get_node("Plane").get_active_material(0)
 	if arrow_material:
 		arrow_material.albedo_color = Color(0, 1, 0)  # Reset to green after hit
+		charge_amount = min_force
+		charging_up = true
+
 
 func _physics_process(delta):
 	# Reset ball if it falls off the map
-	if global_transform.origin.y < -10.0:
+	if global_transform.origin.y < -110.0:
 		game_manager.reset_to_checkpoint(self)
 		print("Out of bounds! Resetting to:", game_manager.current_checkpoint_position)
 	# Adjust angular damping based on speed
@@ -183,5 +199,5 @@ func check_surface():
 		angular_damp = 0.0
 	# Print message if friction changes
 	if friction_factor != previous_friction_factor:
-		print("Friction factor changed:", friction_factor, "| Bounciness:", bounciness)
+		#print("Friction factor changed:", friction_factor, "| Bounciness:", bounciness)
 		previous_friction_factor

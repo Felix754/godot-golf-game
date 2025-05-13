@@ -10,7 +10,7 @@ script = ExtResource("3_uwiyt")
 mode = 0
 textures = [[ExtResource("4_hegof")], [null]]
 
-[node name="Node3D" type="Node3D"]
+[node name="TerrainRoot" type="Node3D"]
 
 [node name="HTerrain" type="Node3D" parent="."]
 script = ExtResource("1_tk0hl")

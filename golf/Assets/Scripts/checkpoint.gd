@@ -15,5 +15,3 @@ func _ready():
 func _on_body_entered(body):
 	if body is GolfBall:
 		checkpoint_reached.emit(global_transform.origin)
-
-#TODO: Collision shape in the main scene(Not in the ckeckpoint.tscn (^_^ DONE)

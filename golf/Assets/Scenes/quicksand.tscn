@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://18k58si7e4t1"]
+
+[ext_resource type="Script" uid="uid://ciuo41niq8o7p" path="res://Assets/Scripts/quicksand.gd" id="1_3smbx"]
+
+[node name="Area3D" type="Area3D"]
+script = ExtResource("1_3smbx")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
