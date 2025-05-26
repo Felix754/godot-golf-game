@@ -1,8 +1,10 @@
-[gd_scene load_steps=16 format=4 uid="uid://b75lo2ibcr0nd"]
+[gd_scene load_steps=24 format=4 uid="uid://b75lo2ibcr0nd"]
 
 [ext_resource type="Material" uid="uid://01um1hbtcmba" path="res://Assets/Materials/Material.002.res" id="1_fcybj"]
 [ext_resource type="Material" uid="uid://doqix2b7oqbmp" path="res://Assets/Materials/Lvl1_grass.tres" id="2_64hrr"]
 [ext_resource type="PackedScene" uid="uid://vjxb7k3s2ywg" path="res://Assets/Scenes/checkpoint.tscn" id="3_64hrr"]
+[ext_resource type="PackedScene" uid="uid://18k58si7e4t1" path="res://Assets/Scenes/quicksand.tscn" id="4_7ku3h"]
+[ext_resource type="PackedScene" uid="uid://cujlmd2magc4y" path="res://Assets/Scenes/water.tscn" id="5_cgpvh"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lunyp"]
 
@@ -88,6 +90,27 @@ data = PackedVector3Array(0, 0, 0, 1, 0, -1, 0, 0, -1, -1, 0, 0, 0, 0, 0, 0, 0, 
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cgpvh"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4rm2b"]
+transparency = 1
+albedo_color = Color(0, 0.5875, 0.75, 0.690196)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cgpvh"]
+material = SubResource("StandardMaterial3D_4rm2b")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_76c78"]
+transparency = 1
+albedo_color = Color(0.89, 0.6764, 0.089, 0.913725)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4rm2b"]
+size = Vector3(19.9318, 16.0878, 40.1788)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cgpvh"]
+transparency = 1
+albedo_color = Color(0, 0.595333, 0.76, 0.65098)
+
+[sub_resource type="BoxMesh" id="BoxMesh_76c78"]
+material = SubResource("StandardMaterial3D_cgpvh")
+
 [node name="test2" type="Node3D"]
 
 [node name="test_concrete" type="MeshInstance3D" parent="."]
@@ -124,3 +147,27 @@ shape_resource = SubResource("BoxShape3D_7ku3h")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.31641, 13.0054)
 shape = SubResource("BoxShape3D_cgpvh")
+
+[node name="Quicksand" parent="." instance=ExtResource("4_7ku3h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.8786, -19.6377, -14.5708)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Quicksand"]
+transform = Transform3D(20, 0, 0, 0, 15, 0, 0, 0, 40, 20.9755, 28.0271, 12.7728)
+mesh = SubResource("BoxMesh_cgpvh")
+surface_material_override/0 = SubResource("StandardMaterial3D_76c78")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Quicksand"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.9182, 27.4419, 12.7201)
+shape = SubResource("BoxShape3D_4rm2b")
+
+[node name="water" parent="." instance=ExtResource("5_cgpvh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.10281, -19.6641, -14.5181)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="water"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.9182, 27.4419, 12.7201)
+shape = SubResource("BoxShape3D_4rm2b")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="water"]
+transform = Transform3D(20, 0, 0, 0, 15, 0, 0, 0, 40, 20.9182, 27.4419, 12.7201)
+mesh = SubResource("BoxMesh_76c78")
+skeleton = NodePath("../CollisionShape3D")

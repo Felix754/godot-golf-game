@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://c4otn70we5tfj"]
+[gd_scene load_steps=12 format=3 uid="uid://c4otn70we5tfj"]
 
 [ext_resource type="ArrayMesh" uid="uid://c1mcpb6drry6m" path="res://Assets/Models/golftestcourt_Mesh.res" id="1_nvnu3"]
 [ext_resource type="PackedScene" uid="uid://vjxb7k3s2ywg" path="res://Assets/Scenes/checkpoint.tscn" id="2_0dcg4"]
 [ext_resource type="PackedScene" uid="uid://ddhxnqy22xg4f" path="res://Assets/Scenes/jump_pad.tscn" id="3_tokpw"]
-[ext_resource type="PackedScene" uid="uid://18k58si7e4t1" path="res://Assets/Scenes/quicksand.tscn" id="4_x2ndg"]
+[ext_resource type="PackedScene" uid="uid://dlpla4i0pvwow" path="res://Assets/Scenes/ventilation_grille.tscn" id="5_rewca"]
+[ext_resource type="PackedScene" uid="uid://d0b0gkhxfeami" path="res://Assets/Scenes/plank_bridge_generator.tscn" id="6_jtddc"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ik5og"]
 friction = 0.3
@@ -14,19 +15,14 @@ data = PackedVector3Array(1.8471, 0, -0.0232, 1.3106, 0, 2.1501, 1.8471, 0, 2.21
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tokpw"]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jtddc"]
+friction = 0.3
+rough = true
+
 [sub_resource type="BoxMesh" id="BoxMesh_0dcg4"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_x2ndg"]
 size = Vector3(299.762, 10.0398, 300.104)
-
-[sub_resource type="BoxMesh" id="BoxMesh_rewca"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jtddc"]
-transparency = 1
-albedo_color = Color(0.89, 0.6764, 0.089, 0.913725)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_mvt4v"]
-size = Vector3(80.0737, 80.2831, 79.9944)
 
 [node name="Floor" type="StaticBody3D"]
 physics_material_override = SubResource("PhysicsMaterial_ik5og")
@@ -48,6 +44,7 @@ transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, -1.17974, 0)
 shape = SubResource("BoxShape3D_tokpw")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_jtddc")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="StaticBody3D"]
 transform = Transform3D(300, 0, 0, 0, 10, 0, 0, 0, 300, -268.634, 4.71, 46.263)
@@ -61,14 +58,29 @@ shape = SubResource("BoxShape3D_x2ndg")
 [node name="Jump_pad" parent="." instance=ExtResource("3_tokpw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -183.4, 10.5793, -58.4855)
 
-[node name="Quicksand" parent="." instance=ExtResource("4_x2ndg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -352.866, -29.4409, -143.996)
+[node name="ventilationGrille" parent="." instance=ExtResource("5_rewca")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -176.845, 14.717, 179.925)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Quicksand"]
-transform = Transform3D(80, 0, 0, 0, 80, 0, 0, 0, 80, 0, 0, 0)
-mesh = SubResource("BoxMesh_rewca")
-surface_material_override/0 = SubResource("StandardMaterial3D_jtddc")
+[node name="ventilationGrille2" parent="." instance=ExtResource("5_rewca")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -165.808, 14.7782, 179.93)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Quicksand"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0167542, 0.0515747, -0.0744514)
-shape = SubResource("BoxShape3D_mvt4v")
+[node name="ventilationGrille3" parent="." instance=ExtResource("5_rewca")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -189.071, 14.7542, 179.783)
+
+[node name="plank_bridge_generator" parent="." instance=ExtResource("6_jtddc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -113.303, 8.45805, 135.09)
+plank_count = 20
+plank_spacing = 7.0
+break_delay = 0.5
+
+[node name="plank_bridge_generator2" parent="." instance=ExtResource("6_jtddc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -113.215, 8.44814, 147.227)
+plank_count = 20
+plank_spacing = 7.0
+break_delay = 0.5
+
+[node name="plank_bridge_generator3" parent="." instance=ExtResource("6_jtddc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -113.354, 8.44308, 141.16)
+plank_count = 20
+plank_spacing = 7.0
+break_delay = 0.5

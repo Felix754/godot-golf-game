@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=3 uid="uid://b6bo3gt07u0pu"]
+
+[ext_resource type="Script" uid="uid://dy3jaeypd0lb6" path="res://Assets/Scripts/plank.gd" id="1_xwrit"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_xwrit"]
+friction = 0.5
+rough = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_ylcjm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xwrit"]
+albedo_color = Color(0.573497, 0.385577, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xwrit"]
+size = Vector3(5.99034, 1.02764, 5.97876)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bclmf"]
+size = Vector3(6.12009, 1.09241, 6.13806)
+
+[node name="Plank" type="StaticBody3D"]
+physics_material_override = SubResource("PhysicsMaterial_xwrit")
+script = ExtResource("1_xwrit")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(6, 0, 0, 0, 1, 0, 0, 0, 6, 0, 0.375825, 0)
+mesh = SubResource("BoxMesh_ylcjm")
+surface_material_override/0 = SubResource("StandardMaterial3D_xwrit")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000192642, 0.383968, -0.000148296)
+shape = SubResource("BoxShape3D_xwrit")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00512695, 0.377093, 0.00500488)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00352478, 0.00616455, 0.00164795)
+shape = SubResource("BoxShape3D_bclmf")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

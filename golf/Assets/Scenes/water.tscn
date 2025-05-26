@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cujlmd2magc4y"]
+
+[ext_resource type="Script" uid="uid://3i6fwstl7grm" path="res://Assets/Scripts/water.gd" id="1_tvcqb"]
+
+[node name="water" type="Area3D"]
+script = ExtResource("1_tvcqb")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

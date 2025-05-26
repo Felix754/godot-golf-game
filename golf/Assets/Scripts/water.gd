@@ -1,19 +1,19 @@
 extends Area3D
 
-@export var sinking_speed: float = 1.5
-@export var max_sink_velocity: float = -5.0
-@export var horizontal_damping: float = 130.0  # Higher value = faster slowing down
+@export var sinking_speed: float = 2.0
+@export var max_sink_velocity: float = -30.0
+@export var horizontal_damping: float = 50.0  # Higher value = faster slowing down
 
 @onready var golf_ball = null
 
 func _on_body_entered(body):
 	if body is GolfBall:
-		print("Quicksand START")
+		print("Water START")
 		golf_ball = body
 
 func _on_body_exited(body):
 	if body is GolfBall:
-		print("Quicksand END")
+		print("Water END")
 		golf_ball = null
 
 func _physics_process(delta):

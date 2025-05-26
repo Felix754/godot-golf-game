@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://dlpla4i0pvwow"]
+
+[ext_resource type="Script" uid="uid://bsdant7ihyn2b" path="res://Assets/Scripts/ventilation_grille.gd" id="1_si7ic"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_si7ic"]
+rough = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hku4y"]
+albedo_color = Color(0.2775, 1, 0.15, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ga2nf"]
+material = SubResource("StandardMaterial3D_hku4y")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_djme0"]
+size = Vector3(10.0062, 9.95459, 1)
+
+[node name="ventilationGrille" type="StaticBody3D"]
+physics_material_override = SubResource("PhysicsMaterial_si7ic")
+script = ExtResource("1_si7ic")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_ga2nf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.10352e-05, 0.0129395, 0)
+shape = SubResource("BoxShape3D_djme0")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.10352e-05, 0.0129395, 0)
+shape = SubResource("BoxShape3D_djme0")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
