@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://dq8jxf174dp5a"]
+
+[ext_resource type="Script" uid="uid://csxwmj62pecfd" path="res://Assets/Scripts/portal.gd" id="1_70yge"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_w4psj"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_6erhx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_evw3l"]
+size = Vector3(5.00317, 7.9942, 0.549805)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_70yge"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.99, 0.396, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3qnth"]
+material = SubResource("StandardMaterial3D_70yge")
+
+[node name="Portal" type="Area3D"]
+script = ExtResource("1_70yge")
+
+[node name="leftBar" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 10, 0, 0, 0, 1, -3, 0, 0)
+mesh = SubResource("BoxMesh_w4psj")
+
+[node name="rightBar" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 10, 0, 0, 0, 1, 3, 0, 0)
+mesh = SubResource("BoxMesh_w4psj")
+
+[node name="upperBar" type="MeshInstance3D" parent="."]
+transform = Transform3D(6, 0, 0, 0, 0.5, 0, 0, 0, 1, 0, 4.74138, 0)
+mesh = SubResource("BoxMesh_6erhx")
+
+[node name="downBar" type="MeshInstance3D" parent="."]
+transform = Transform3D(6, 0, 0, 0, 0.5, 0, 0, 0, 1, 0, -4.74338, 0)
+mesh = SubResource("BoxMesh_6erhx")
+
+[node name="ExitMarker" type="Marker3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00280762, 9.15527e-05, 0.0415039)
+shape = SubResource("BoxShape3D_evw3l")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+transform = Transform3D(6, 0, 0, 0, 9.8, 0, 0, 0, 0.1, 0, 0.0611742, 0)
+mesh = SubResource("BoxMesh_3qnth")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

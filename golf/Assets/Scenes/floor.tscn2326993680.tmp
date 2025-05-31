@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c4otn70we5tfj"]
+[gd_scene load_steps=13 format=3 uid="uid://c4otn70we5tfj"]
 
 [ext_resource type="ArrayMesh" uid="uid://c1mcpb6drry6m" path="res://Assets/Models/golftestcourt_Mesh.res" id="1_nvnu3"]
 [ext_resource type="PackedScene" uid="uid://vjxb7k3s2ywg" path="res://Assets/Scenes/checkpoint.tscn" id="2_0dcg4"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://dlpla4i0pvwow" path="res://Assets/Scenes/ventilation_grille.tscn" id="5_rewca"]
 [ext_resource type="PackedScene" uid="uid://d0b0gkhxfeami" path="res://Assets/Scenes/plank_bridge_generator.tscn" id="6_jtddc"]
 [ext_resource type="PackedScene" uid="uid://dq8jxf174dp5a" path="res://Assets/Scenes/portal.tscn" id="6_mvt4v"]
-[ext_resource type="PackedScene" uid="uid://6wqt0dvxs8ki" path="res://Assets/Scenes/laser.tscn" id="7_mvt4v"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ik5og"]
 friction = 0.3
@@ -70,7 +69,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -165.808, 14.7782, 179.93)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -189.071, 14.7542, 179.783)
 
 [node name="plank_bridge_generator" parent="." instance=ExtResource("6_jtddc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -113.303, 8.5, 135.09)
+transform = Transform3D(0.00872656, 0, -0.999962, 0, 1, 0, 0.999962, 0, 0.00872656, -113.303, 8.5, 135.09)
 plank_count = 20
 plank_spacing = 7.0
 break_delay = 0.5
@@ -87,24 +86,14 @@ plank_count = 20
 plank_spacing = 7.0
 break_delay = 0.5
 
-[node name="Portal_ID=0" parent="." instance=ExtResource("6_mvt4v")]
-transform = Transform3D(-1.31134e-07, 0, 3, 0, 3, 0, -3, 0, -1.31134e-07, -219.822, 21.3783, 12.1631)
-exit_offset = Vector3(0, 0, -3)
-
-[node name="Portal2_ID=0" parent="." instance=ExtResource("6_mvt4v")]
-transform = Transform3D(-1.31134e-07, 0, 3, 0, 3, 0, -3, 0, -1.31134e-07, 106.784, 20.0309, 36.4078)
-exit_offset = Vector3(0, 0, 3)
-
 [node name="Portal" parent="." instance=ExtResource("6_mvt4v")]
-transform = Transform3D(20, 0, 0, 0, -8.74228e-07, -20, 0, 20, -8.74228e-07, -201.908, -3.23206, 273.312)
-portal_id = 1
-exit_offset = Vector3(0, 0, 0.1)
+transform = Transform3D(-1.31134e-07, 0, 3, 0, 3, 0, -3, 0, -1.31134e-07, -219.821, 25.1455, 11.921)
+portal_id = null
+exit_offset = null
+marker_name = null
 
 [node name="Portal2" parent="." instance=ExtResource("6_mvt4v")]
-transform = Transform3D(20, 0, 0, 0, -8.74228e-07, -20, 0, 20, -8.74228e-07, -201.908, 413.679, 273.312)
-portal_id = 1
-exit_offset = Vector3(0, 0, 0.1)
-
-[node name="Laser" parent="." instance=ExtResource("7_mvt4v")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -123.664, 13.409, -63.1265)
-laser_length = 50.0
+transform = Transform3D(-1.31134e-07, 0, 3, 0, 3, 0, -3, 0, -1.31134e-07, 106.784, 20.0309, 36.4078)
+portal_id = null
+exit_offset = null
+marker_name = null

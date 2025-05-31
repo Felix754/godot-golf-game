@@ -197,7 +197,3 @@ func check_surface():
 		is_airborne = true
 		friction_factor = 0.1
 		angular_damp = 0.0
-	# Print message if friction changes
-	if friction_factor != previous_friction_factor:
-		#print("Friction factor changed:", friction_factor, "| Bounciness:", bounciness)
-		previous_friction_factor

@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://6wqt0dvxs8ki"]
+
+[ext_resource type="Script" uid="uid://c5e58rkb0nmk7" path="res://Assets/Scripts/laser.gd" id="1_boik5"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_boik5"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_810nr"]
+
+[node name="Laser" type="Node3D"]
+script = ExtResource("1_boik5")
+laser_length = 20.0
+
+[node name="LeftEnd" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-07, 0, 1, 0, 10, 0, -10, 0, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("BoxMesh_boik5")
+
+[node name="RightEnd" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-07, 0, 1, 0, 10, 0, -10, 0, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("BoxMesh_810nr")
+skeleton = NodePath("../LeftEnd")
+
+[node name="LaserBeam" type="MeshInstance3D" parent="."]
+skeleton = NodePath("../RightEnd")
+
+[node name="CollisionArea" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CollisionArea"]
+
+[connection signal="body_entered" from="CollisionArea" to="." method="_on_collision_area_body_entered"]
