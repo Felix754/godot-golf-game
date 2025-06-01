@@ -35,9 +35,8 @@ ambient_light_sky_contribution = 0.4
 [node name="main" type="Node"]
 script = ExtResource("1_ttgh6")
 
-[node name="golfBall" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("2_bo1nx")]
+[node name="golfBall" parent="." instance=ExtResource("2_bo1nx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 92, 0)
-camera = NodePath("../Camera3D")
 
 [node name="Floor" parent="." groups=["levels"] instance=ExtResource("1_jjgbg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.477, -2.92327, 0.149)

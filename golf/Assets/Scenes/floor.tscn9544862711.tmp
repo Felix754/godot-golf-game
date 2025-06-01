@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://6wqt0dvxs8ki" path="res://Assets/Scenes/laser.tscn" id="7_mvt4v"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ik5og"]
-friction = 0.3
 rough = true
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_nvnu3"]

@@ -73,7 +73,6 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_lea4a")
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fcybj"]
-friction = 0.2
 rough = true
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_fcybj"]
@@ -140,12 +139,12 @@ transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0)
 shape = SubResource("ConcavePolygonShape3D_64hrr")
 
 [node name="Checkpoint" parent="." instance=ExtResource("3_64hrr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 25.7043, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 25.7043, 19.1787)
 is_start = true
 shape_resource = SubResource("BoxShape3D_7ku3h")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.31641, 13.0054)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.31641, 5.68448)
 shape = SubResource("BoxShape3D_cgpvh")
 
 [node name="Quicksand" parent="." instance=ExtResource("4_7ku3h")]
