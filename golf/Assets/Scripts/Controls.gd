@@ -1,42 +1,72 @@
 extends Node
-
 class_name Controls
-var use_joystick := false
+
+# ---------------------- Input configuration ----------------------------
+var use_joystick := false   # Whether a joystick is currently connected
+# -----------------------------------------------------------------------
 
 func _ready():
+	# Detect joystick presence at startup
 	use_joystick = Input.get_connected_joypads().size() > 0
+
+func _input(event):
+	# Log pressed joypad buttons (for debug)
+	if event is InputEventJoypadButton and event.pressed:
+		print("🔘 Joypad button pressed:", event.button_index)
 
 func is_joystick() -> bool:
 	return use_joystick
 
+# ---------------------- Arrow input (aiming) ---------------------------
 static func get_arrow_input() -> Vector2:
+	# Get direction from movement input (e.g., arrow keys / analog stick)
 	var x = Input.get_action_strength("move_arrow_right") - Input.get_action_strength("move_arrow_left")
-	var y = 0
+	var y = Input.get_action_strength("move_arrow_down") - Input.get_action_strength("move_arrow_up")
 	return Vector2(x, y)
+# -----------------------------------------------------------------------
 
+# ---------------------- Camera joystick input --------------------------
 static func get_camera_input() -> Vector2:
-	var x = Input.get_action_strength("move_cam_right") - Input.get_action_strength("move_cam_left")
-	var y = Input.get_action_strength("move_cam_down") - Input.get_action_strength("move_cam_up")
-	return Vector2(x, y)
+	var x := Input.get_action_strength("look_left") - Input.get_action_strength("look_right")
+	var y := Input.get_action_strength("look_down") - Input.get_action_strength("look_up")
+	var raw := Vector2(x, y)
+	var input_len := raw.length()
 
+	var min_input := 0.05    # Minimum input threshold
+	var max_input := 1.0     # Maximum input value
+	var min_sens := 0.045    # Sensitivity at minimum input
+	var max_sens := 0.3      # Sensitivity at maximum input
+
+	if input_len < min_input:
+		return Vector2.ZERO
+
+	var t := (input_len - min_input) / (max_input - min_input)
+	var scaled_sens: float = lerp(min_sens, max_sens, clamp(t, 0.0, 1.0))
+	return raw.normalized() * scaled_sens
+# -----------------------------------------------------------------------
+
+# ---------------------- Gameplay actions -------------------------------
 static func is_following_camera() -> bool:
-	print("triggerR")
 	return Input.is_action_pressed("cam_follow")
 
 static func is_attack_pressed() -> bool:
-	print('A')
 	return Input.is_action_just_pressed("hit")
 
 static func is_cancel_pressed() -> bool:
-	print('B')
 	return Input.is_action_just_pressed("cancel_charge")
 
-static func debug_joystick_axes():
-	
-	# Log joystick axis values to debug if input is being detected
-	if Input.get_connected_joypads().size() > 0:
-		var device_id = Input.get_connected_joypads()[0]
-		print("Axis 0 (Left Stick X): ", Input.get_joy_axis(device_id, 0))
-		print("Axis 1 (Left Stick Y): ", Input.get_joy_axis(device_id, 1))
-		print("Axis 2 (Right Stick X): ", Input.get_joy_axis(device_id, 2))
-		print("Axis 3 (Right Stick Y): ", Input.get_joy_axis(device_id, 3))
+static func is_camera_rotating() -> bool:
+	return Input.is_action_pressed("camera_rotate")
+# -----------------------------------------------------------------------
+
+# ---------------------- Zoom controls ----------------------------------
+static func is_zoom_held(event: InputEvent) -> bool:
+	return event.is_action_pressed("zoom_in") or event.is_action_pressed("zoom_out")
+
+static func get_zoom_direction(event: InputEvent) -> float:
+	if event.is_action_pressed("zoom_in"):
+		return -1.0
+	elif event.is_action_pressed("zoom_out"):
+		return 1.0
+	return 0.0
+# -----------------------------------------------------------------------

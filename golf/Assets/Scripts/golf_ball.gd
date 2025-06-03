@@ -64,37 +64,35 @@ func _ready():
 		plane_mesh.set_surface_override_material(0, unique_material)
 
 func _input(event):
-	# Handle key input for charging and hitting the ball
-	if event is InputEventKey:
-		if event.pressed:
-			if can_push and not charging and event.keycode == KEY_SPACE and not is_airborne:
-				charging = true
-				charge_amount = min_force
-				print("Charging started")
-		elif event.keycode == KEY_X and charging:
-			# Cancel charging
+	# Handle input for charging, canceling and hitting the ball
+	if event is InputEventKey or event is InputEventJoypadButton:
+		if event.is_action_pressed("hit") and can_push and not charging and not is_airborne:
+			charging = true
+			charge_amount = min_force
+			print("Charging started")
+
+		elif event.is_action_pressed("cancel_charge") and charging:
 			charging = false
 			charge_amount = min_force
 			charging_up = true
+			print("Charging canceled")
 
 			# Reset arrow color to green
 			var arrow_material = arrow.get_node("Plane").get_active_material(0)
 			if arrow_material:
 				arrow_material.albedo_color = Color(0, 1, 0)
 
-			print("Charging cancelled")
-
-		elif not event.pressed and charging and event.keycode == KEY_SPACE:
+		# ⬇️ Спрацює коли гравець відпустить кнопку 'hit'
+		elif event.is_action_released("hit") and charging:
 			charging = false
 			push_towards_arrow()
 			can_push = false
 			await get_tree().create_timer(cooldown_time).timeout
 			can_push = true
 
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_RIGHT:
-			follow_camera = event.pressed
-			print("Follow camera:", follow_camera)
+
+	follow_camera = Controls.is_following_camera()
+
 
 
 func _process(delta):
@@ -108,9 +106,9 @@ func _process(delta):
 
 	else:
 		var angle_delta := 0.0
-		if Input.is_action_pressed("ui_right"):
+		if Input.is_action_pressed("move_arrow_right"):
 			angle_delta -= arrow_rotation_speed * delta
-		if Input.is_action_pressed("ui_left"):
+		if Input.is_action_pressed("move_arrow_left"):
 			angle_delta += arrow_rotation_speed * delta
 		if angle_delta != 0.0:
 			arrow_angle += angle_delta
@@ -158,23 +156,17 @@ func _process(delta):
 			arrow_material.albedo_color = arrow_color
 
 	# Air control logic
-	if is_airborne and Input.is_action_pressed("ui_accept"):
-		
+	if is_airborne and Input.is_action_pressed("hit"):
 		# Apply slight counter-force to simulate air brake
 		linear_velocity *= 0.995
-		# Apply basic directional control like a glider
-		var control_force := Vector3.ZERO
-		if Input.is_action_pressed("ui_up"):
-			control_force.z -= 10.0
-		if Input.is_action_pressed("ui_down"):
-			control_force.z += 10.0
-		if Input.is_action_pressed("ui_left"):
-			control_force.x -= 10.0
-		if Input.is_action_pressed("ui_right"):
-			control_force.x += 10.0
-		if control_force.length() > 0.0:
-			control_force = control_force.normalized() * 3.5
+
+		# Get directional input from arrows (both keyboard and gamepad)
+		var input_dir := Controls.get_arrow_input()  # або як називається твій singleton
+		if input_dir.length() > 0.0:
+			var control_force := Vector3(input_dir.x, 0, input_dir.y).normalized() * 3.5
 			apply_central_force(control_force)
+
+
 
 func push_towards_arrow():
 	# Apply impulse and torque in arrow direction
@@ -214,7 +206,7 @@ func _physics_process(delta):
 
 		
 	# Apply aerial movement control
-	if is_airborne and Input.is_action_pressed("ui_accept"):
+	if is_airborne and Input.is_action_pressed("hit"):
 		angular_damp = 3.0
 		handle_air_control(delta)
 
@@ -232,13 +224,13 @@ func handle_air_control(delta):
 	var direction := Vector3.ZERO
 	var cam_basis := camera.global_transform.basis
 
-	if Input.is_action_pressed("ui_up"):
+	if Input.is_action_pressed("move_arrow_up"):
 		direction -= cam_basis.z  # Forward relative to camera
-	if Input.is_action_pressed("ui_down"):
+	if Input.is_action_pressed("move_arrow_down"):
 		direction += cam_basis.z  # Backward
-	if Input.is_action_pressed("ui_left"):
+	if Input.is_action_pressed("move_arrow_left"):
 		direction -= cam_basis.x  # Left
-	if Input.is_action_pressed("ui_right"):
+	if Input.is_action_pressed("move_arrow_right"):
 		direction += cam_basis.x  # Right
 
 	if direction != Vector3.ZERO:
