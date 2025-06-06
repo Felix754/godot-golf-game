@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://c5hev4k2x3k5c"]
+
+[ext_resource type="Script" uid="uid://bg1rtd2pxjk3i" path="res://gravity_flip_zone.gd" id="1_ppjgc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w7e63"]
+size = Vector3(1.97766, 1.98883, 2.00586)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w27wt"]
+albedo_color = Color(0.57052, 0.387491, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_ghdrm"]
+material = SubResource("StandardMaterial3D_w27wt")
+
+[node name="GravityFlipZone" type="Node3D"]
+
+[node name="Area3D" type="Area3D" parent="."]
+script = ExtResource("1_ppjgc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.10352e-05, 0.0027771, 0)
+shape = SubResource("BoxShape3D_w7e63")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D"]
+mesh = SubResource("SphereMesh_ghdrm")
+skeleton = NodePath("../CollisionShape3D")
+
+[connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]
+[connection signal="body_exited" from="Area3D" to="Area3D" method="_on_body_exited"]

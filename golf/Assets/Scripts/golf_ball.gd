@@ -4,33 +4,35 @@ class_name GolfBall
 # ----------------------- Hit force & camera configuration -----------------------
 @export var max_force: float = 400.0		# Maximum hit force
 @export var min_force: float = 10.0			# Minimum hit force
+@export var gravity_vector: Vector3 = Vector3.DOWN * 9.8
 @export var charge_time: float = 2.0		# Time to charge from min to max force
 
 @export var cooldown_time: float = 1.0		# Cooldown between hits
-@export var stop_threshold: float = 0.03	# Speed threshold to consider the ball stopped
+@export var stop_threshold: float = 0.03	# Minimum speed to consider ball stopped
 @onready var arrow = $"../arrow"			# Reference to the direction arrow
-@export var arrow_rotation_speed := 2.5		# Speed at which the arrow rotates
+@export var arrow_rotation_speed := 2.5		# Speed of arrow rotation
 @export var arrow_distance := 5.0			# Distance from ball to arrow
-var arrow_angle := 0.0						# Current angle of the arrow
-var charging_up := true  # true = increasing, false = decreasing
+var arrow_angle := 0.0						# Current arrow angle
+var charging_up := true						# true = increasing charge, false = decreasing
 var follow_camera := false
-var camera: Camera3D				# Reference to the camera
-#------------------------------------------------------------------------
+var camera: Camera3D						# Reference to the camera
+# -------------------------------------------------------------------------------
 
-# ----------------------- Hit control state -----------------------------
+# ----------------------- Hit control state -------------------------------------
 var can_push: bool = true				# Whether the ball can be hit
-var charging: bool = false				# Whether the player is holding the hit key
-var charge_amount: float = min_force	# Current charged force
-# -----------------------------------------------------------------------
+var charging: bool = false				# Whether the hit key is being held
+var charge_amount: float = min_force	# Current charge level
+# -------------------------------------------------------------------------------
 
-var game_manager: Node = null     # Reference to the game manager
+var game_manager: Node = null			# Reference to the game manager
 
-# ----------------------- Surface properties ----------------------------
+# ----------------------- Surface properties -------------------------------------
 var friction_factor: float = 1.0		# Current surface friction
-var bounciness: float = 0.5		  	# Current surface bounciness
-# -----------------------------------------------------------------------
+var bounciness: float = 0.5		  		# Current surface bounciness
+var gravity_inverted: bool = false
+# -------------------------------------------------------------------------------
 
-# ----------------------- Surface material mappings ---------------------
+# ----------------------- Surface material mappings -----------------------------
 var friction_table = {	# Maps material friction to damping
 	0.1: 0.995,
 	0.3: 0.9,
@@ -45,10 +47,10 @@ var bounce_table = {	# Maps friction to bounciness
 	1.0: 0.05,
 	99.0: 1.0
 }
-# ------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 
 var is_airborne := false					# Whether the ball is in the air
-var previous_friction_factor: float = -1.0	# Previously applied friction (for change detection)
+var previous_friction_factor: float = -1.0	# For detecting friction change
 
 func _ready():
 	# Called when the node is added to the scene
@@ -82,7 +84,7 @@ func _input(event):
 			if arrow_material:
 				arrow_material.albedo_color = Color(0, 1, 0)
 
-		# ⬇️ Спрацює коли гравець відпустить кнопку 'hit'
+		# ⬇️ Triggered when the player releases the 'hit' key
 		elif event.is_action_released("hit") and charging:
 			charging = false
 			push_towards_arrow()
@@ -90,10 +92,7 @@ func _input(event):
 			await get_tree().create_timer(cooldown_time).timeout
 			can_push = true
 
-
 	follow_camera = Controls.is_following_camera()
-
-
 
 func _process(delta):
 	# Rotate arrow based on player input
@@ -113,7 +112,6 @@ func _process(delta):
 		if angle_delta != 0.0:
 			arrow_angle += angle_delta
 
-
 	# Update arrow position and rotation
 	if arrow:
 		arrow.visible = not is_airborne  # Hide arrow if airborne
@@ -129,13 +127,13 @@ func _process(delta):
 		var basis = Basis()
 		basis.z = direction
 		basis.x = basis.z.cross(Vector3.UP).normalized()
-		basis.y = Vector3.UP
+		var direction_multipl = -1 if gravity_inverted else 1
+		basis.y = Vector3.UP * direction_multipl
 		arrow.global_transform.basis = basis
 		arrow.rotate_y(deg_to_rad(-90))
 
-	# Charge force and change arrow color
+	# Charge force and update arrow color
 	if charging:
-		
 		var rate = (max_force - min_force) / charge_time
 
 		if charging_up:
@@ -151,7 +149,7 @@ func _process(delta):
 
 		var arrow_material = arrow.get_node("Plane").get_active_material(0)
 		var t = (charge_amount - min_force) / (max_force - min_force)
-		var arrow_color = Color(t, 1.0 - t, 0.0)  # Color from green to red and back
+		var arrow_color = Color(t, 1.0 - t, 0.0)  # Color transitions from green to red
 		if arrow_material:
 			arrow_material.albedo_color = arrow_color
 
@@ -160,16 +158,14 @@ func _process(delta):
 		# Apply slight counter-force to simulate air brake
 		linear_velocity *= 0.995
 
-		# Get directional input from arrows (both keyboard and gamepad)
-		var input_dir := Controls.get_arrow_input()  # або як називається твій singleton
+		# Get directional input (keyboard or gamepad)
+		var input_dir := Controls.get_arrow_input()
 		if input_dir.length() > 0.0:
 			var control_force := Vector3(input_dir.x, 0, input_dir.y).normalized() * 3.5
 			apply_central_force(control_force)
 
-
-
 func push_towards_arrow():
-	# Apply impulse and torque in arrow direction
+	# Apply impulse and torque in the arrow direction
 	if not arrow or is_airborne:
 		print("Cannot hit in air!")
 		return
@@ -177,9 +173,16 @@ func push_towards_arrow():
 	direction.y = 0
 	direction = direction.normalized()
 	apply_central_impulse(direction * charge_amount)
-	var torque_axis = Vector3.UP.cross(direction)
 	var torque_strength = charge_amount * 0.4
+	var torque_axis: Vector3
+
+	if gravity_inverted:
+		torque_axis = direction.cross(Vector3.UP)  # Inverted gravity
+	else:
+		torque_axis = Vector3.UP.cross(direction)  # Normal gravity
+
 	apply_torque_impulse(torque_axis * torque_strength)
+
 	print("Ball hit in arrow direction with force:", charge_amount)
 	var arrow_material = arrow.get_node("Plane").get_active_material(0)
 	if arrow_material:
@@ -188,9 +191,11 @@ func push_towards_arrow():
 		charging_up = true
 
 func _physics_process(delta):
+	apply_central_force(gravity_vector * mass)
 	check_surface()
-	# Reset ball if it falls off the map
-	if global_transform.origin.y < -110.0:
+
+	# Reset ball if it falls out of bounds
+	if global_transform.origin.y < -110.0 or global_transform.origin.y > 800:
 		game_manager.reset_to_checkpoint(self)
 		print("Out of bounds! Resetting to:", game_manager.current_checkpoint_position)
 
@@ -204,59 +209,58 @@ func _physics_process(delta):
 		elif speed > 0.1:
 			angular_damp = 13.0
 
-		
-	# Apply aerial movement control
+	# Apply air control
 	if is_airborne and Input.is_action_pressed("hit"):
 		angular_damp = 3.0
 		handle_air_control(delta)
 
 	apply_friction(delta)
 
-	# Stop the ball if it's moving very slowly
+	# Stop the ball if moving very slowly
 	if linear_velocity.length() < stop_threshold:
 		linear_velocity = Vector3.ZERO
 		angular_velocity = Vector3.ZERO
 
 func handle_air_control(delta):
 	if not camera:
-		return  # Camera reference is required
+		return
 	
 	var direction := Vector3.ZERO
 	var cam_basis := camera.global_transform.basis
 
+	# Determine direction multiplier for gravity
+	var invert := -1 if gravity_inverted else 1
+
 	if Input.is_action_pressed("move_arrow_up"):
-		direction -= cam_basis.z  # Forward relative to camera
+		direction -= cam_basis.z * invert
 	if Input.is_action_pressed("move_arrow_down"):
-		direction += cam_basis.z  # Backward
+		direction += cam_basis.z * invert
 	if Input.is_action_pressed("move_arrow_left"):
-		direction -= cam_basis.x  # Left
+		direction -= cam_basis.x * invert
 	if Input.is_action_pressed("move_arrow_right"):
-		direction += cam_basis.x  # Right
+		direction += cam_basis.x * invert
 
 	if direction != Vector3.ZERO:
-		direction.y = 0  # Ignore vertical direction
+		direction.y = 0
 		direction = direction.normalized()
 		var air_control_strength := 140.0
 		apply_central_force(direction * air_control_strength)
-
-
-
 
 func apply_friction(delta: float):
 	var damping = 1.0 - (friction_factor * delta * 5.0)
 	if is_airborne:
 		return
-	
+
 	linear_velocity.x *= max(0.0, damping)
 	linear_velocity.z *= max(0.0, damping)
 
-
 func check_surface():
-	# Cast a ray down to detect the surface and set friction/bounciness
+	# Cast ray to detect surface and update friction/bounce
 	var from = global_transform.origin
-	var to = from - Vector3.UP * 5.0
+	var direction_multipl = -1 if gravity_inverted else 1
+	var to = from - Vector3.UP * 5.0 * direction_multipl
 	var query = PhysicsRayQueryParameters3D.create(from, to)
-	
+
 	query.collide_with_areas = false
 	query.collide_with_bodies = true
 	var result = get_world_3d().direct_space_state.intersect_ray(query)
@@ -272,8 +276,8 @@ func check_surface():
 		is_airborne = true
 		friction_factor = 0.03
 		angular_damp = 0
-	
-	# Print message if friction changes
-	"""if friction_factor != previous_friction_factor:
+
+	# Print message if friction changed
+	if friction_factor != previous_friction_factor:
 		print("Friction factor changed:", friction_factor, "| Bounciness:", bounciness)
-		previous_friction_factor = friction_factor"""
+		previous_friction_factor = friction_factor

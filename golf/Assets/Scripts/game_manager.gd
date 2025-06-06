@@ -30,6 +30,7 @@ func switchtolvl(lvl: Node):
 	
 # Called when the scene loads
 func _ready():
+	Controls.reset_input_map()
 	await get_tree().process_frame  # Delay to ensure all nodes are initialized
 	hole.level_won.connect(on_level_won)  # Subscribe to level completion event
 

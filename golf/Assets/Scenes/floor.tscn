@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c4otn70we5tfj"]
+[gd_scene load_steps=15 format=3 uid="uid://c4otn70we5tfj"]
 
 [ext_resource type="ArrayMesh" uid="uid://c1mcpb6drry6m" path="res://Assets/Models/golftestcourt_Mesh.res" id="1_nvnu3"]
 [ext_resource type="PackedScene" uid="uid://vjxb7k3s2ywg" path="res://Assets/Scenes/checkpoint.tscn" id="2_0dcg4"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://d0b0gkhxfeami" path="res://Assets/Scenes/plank_bridge_generator.tscn" id="6_jtddc"]
 [ext_resource type="PackedScene" uid="uid://dq8jxf174dp5a" path="res://Assets/Scenes/portal.tscn" id="6_mvt4v"]
 [ext_resource type="PackedScene" uid="uid://6wqt0dvxs8ki" path="res://Assets/Scenes/laser.tscn" id="7_mvt4v"]
+[ext_resource type="PackedScene" uid="uid://c5hev4k2x3k5c" path="res://Assets/Scenes/gravity_flip_zone.tscn" id="8_4eue3"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ik5og"]
 friction = 0.3
@@ -44,6 +45,19 @@ is_start = true
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint"]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, -1.17974, 0)
 shape = SubResource("BoxShape3D_tokpw")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Checkpoint"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 437.219, 376.193, 0)
+physics_material_override = SubResource("PhysicsMaterial_jtddc")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Checkpoint/StaticBody3D"]
+transform = Transform3D(300, 0, 0, 0, 10, 0, 0, 0, 300, -268.634, 4.71, 46.263)
+mesh = SubResource("BoxMesh_0dcg4")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -268.966, 4.71233, 46.5986)
+shape = SubResource("BoxShape3D_x2ndg")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 physics_material_override = SubResource("PhysicsMaterial_jtddc")
@@ -108,3 +122,9 @@ exit_offset = Vector3(0, 0, 0.1)
 [node name="Laser" parent="." instance=ExtResource("7_mvt4v")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -123.664, 13.409, -63.1265)
 laser_length = 50.0
+
+[node name="GravityFlipZone" parent="." instance=ExtResource("8_4eue3")]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 108.246, 15.8673, 63.299)
+
+[node name="GravityFlipZone2" parent="." instance=ExtResource("8_4eue3")]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 234.448, 393.167, 63.299)
